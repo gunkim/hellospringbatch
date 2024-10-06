@@ -1,4 +1,9 @@
 spring:
+  datasource:
+    hikari:
+      maximum-pool-size: 10
+---
+spring:
   config:
     activate:
       on-profile: local-h2-datasource
@@ -10,6 +15,9 @@ spring:
     console:
       enabled: true
       path: /h2-console
+  batch:
+    jdbc:
+      initialize-schema: always
 ---
 spring:
   config:
@@ -20,6 +28,9 @@ spring:
     driverClassName: com.mysql.cj.jdbc.Driver
     username: root
     password: root
+  batch:
+    jdbc:
+      initialize-schema: never
 ---
 spring:
   config:
@@ -30,3 +41,6 @@ spring:
     driverClassName: com.mysql.cj.jdbc.Driver
     username: # dev mysql username
     password: # dev mysql password
+  batch:
+    jdbc:
+      initialize-schema: never
