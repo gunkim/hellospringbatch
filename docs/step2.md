@@ -72,4 +72,3 @@
 
 - **JobRepository**는 JobExecution, StepExecution 등 배치 실행 정보나 상태, 결과 정보를 데이터베이스에 저장
 - 이 정보를 바탕으로 스프링 배치는 중단된 Job의 재실행 또는 중단된 지점에서 다시 시작할 수 있도록 지원
-- 
