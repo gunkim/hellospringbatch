@@ -20,11 +20,11 @@
 - **JobRepository**
     - Job과 관련된 메타데이터를 저장하며, `JobExecution`과 `Step`을 관리
 - **ItemReader**
-    - Chunk 모델에서 사용, 데이터를 읽어오는 인터페이스
+    - 주로 Chunk 모델에서 사용, 데이터를 읽어오는 인터페이스
 - **ItemProcessor**
-    - Chunk 모델에서 사용, 데이터를 가공하는 인터페이스
+    - 주로 Chunk 모델에서 사용, 데이터를 가공하는 인터페이스
 - **ItemWriter**
-    - Chunk 모델에서 사용, 데이터를 쓰는 인터페이스
+    - 주로 Chunk 모델에서 사용, 데이터를 쓰는 인터페이스
 - **Tasklet**
     - 단순하고 유연한 배치 처리를 수행하는 단위
 
