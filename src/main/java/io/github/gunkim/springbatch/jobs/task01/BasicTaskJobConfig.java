@@ -8,6 +8,7 @@ import org.springframework.batch.core.launch.support.RunIdIncrementer;
 import org.springframework.batch.core.repository.JobRepository;
 import org.springframework.batch.core.step.builder.StepBuilder;
 import org.springframework.batch.core.step.tasklet.Tasklet;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.transaction.PlatformTransactionManager;
@@ -21,11 +22,11 @@ public class BasicTaskJobConfig {
     }
 
     @Bean
-    public Step step(JobRepository jobRepository, PlatformTransactionManager transactionManager) {
+    public Step step(JobRepository jobRepository, PlatformTransactionManager transactionManager, @Qualifier("greetingTasklet") Tasklet greetingTasklet) {
         log.info("------------------------ Step -------------------");
 
         return new StepBuilder("myStep", jobRepository)
-                .tasklet(greetingTasklet(), transactionManager)
+                .tasklet(greetingTasklet, transactionManager)
                 .build();
     }
 
