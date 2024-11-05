@@ -1,44 +1,63 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 plugins {
-    java
-    id("org.springframework.boot") version "3.3.4"
     id("io.spring.dependency-management") version "1.1.6"
+    id("org.springframework.boot") version "3.3.5"
+    kotlin("jvm") version "2.0.21"
+    kotlin("plugin.spring") version "2.0.21"
 }
 
-group = "io.github.gunkim"
-version = "0.0.1-SNAPSHOT"
-
-java {
-    toolchain {
-        languageVersion = JavaLanguageVersion.of(21)
+allprojects {
+    group = "io.github.gunkim"
+    version = "0.0.1"
+    repositories {
+        mavenCentral()
     }
 }
 
-configurations {
-    compileOnly {
-        extendsFrom(configurations.annotationProcessor.get())
+subprojects {
+    apply(plugin = "java")
+    apply(plugin = "io.spring.dependency-management")
+    apply(plugin = "org.springframework.boot")
+    apply(plugin = "org.jetbrains.kotlin.jvm")
+    apply(plugin = "org.jetbrains.kotlin.plugin.spring")
+
+    tasks {
+        withType<KotlinCompile> {
+            kotlinOptions.jvmTarget = "17"
+        }
+
+        withType<JavaCompile> {
+            sourceCompatibility = JavaVersion.VERSION_21.toString()
+            targetCompatibility = JavaVersion.VERSION_21.toString()
+        }
+
+        test {
+            useJUnitPlatform()
+        }
     }
-}
 
-repositories {
-    mavenCentral()
-}
+    dependencies {
+        // Spring Boot starters
+        implementation("org.springframework.boot:spring-boot-starter-web")
+        implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+        implementation("org.springframework.boot:spring-boot-starter-batch")
+        implementation("org.springframework.boot:spring-boot-starter-data-jdbc")
 
-dependencies {
-    implementation("org.springframework.boot:spring-boot-starter-batch")
+        // Lombok
+        compileOnly("org.projectlombok:lombok")
+        annotationProcessor("org.projectlombok:lombok")
 
-    // Lombok
-    compileOnly("org.projectlombok:lombok")
-    annotationProcessor("org.projectlombok:lombok")
+        // JDBC Drivers
+        implementation("com.h2database:h2:2.3.232")
+        implementation("com.mysql:mysql-connector-j:9.0.0")
 
-    // Testing
-    testImplementation("org.springframework.boot:spring-boot-starter-test")
-    testImplementation("org.springframework.batch:spring-batch-test")
+        // Kotlin
+        implementation("org.jetbrains.kotlin:kotlin-reflect")
+        implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 
-    // JDBC
-    implementation("com.h2database:h2:2.3.232")
-    implementation("com.mysql:mysql-connector-j:9.0.0")
-}
-
-tasks.withType<Test> {
-    useJUnitPlatform()
+        // Testing
+        testImplementation("org.springframework.boot:spring-boot-starter-test")
+        testImplementation("org.springframework.batch:spring-batch-test")
+    }
 }

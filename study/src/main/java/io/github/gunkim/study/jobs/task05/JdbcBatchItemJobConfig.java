@@ -1,6 +1,6 @@
-package io.github.gunkim.springbatch.jobs.task05;
+package io.github.gunkim.study.jobs.task05;
 
-import io.github.gunkim.springbatch.jobs.task05.model.Customer;
+import io.github.gunkim.study.jobs.task05.model.Customer;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.core.Job;

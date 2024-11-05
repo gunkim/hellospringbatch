@@ -1,4 +1,4 @@
-package io.github.gunkim.springbatch.jobs.task04.model;
+package io.github.gunkim.study.jobs.task04.model;
 
 public record Customer(
         String name,

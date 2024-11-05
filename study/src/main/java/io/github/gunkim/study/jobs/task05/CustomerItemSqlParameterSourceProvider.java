@@ -1,6 +1,6 @@
-package io.github.gunkim.springbatch.jobs.task05;
+package io.github.gunkim.study.jobs.task05;
 
-import io.github.gunkim.springbatch.jobs.task05.model.Customer;
+import io.github.gunkim.study.jobs.task05.model.Customer;
 import org.springframework.batch.item.database.ItemSqlParameterSourceProvider;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;

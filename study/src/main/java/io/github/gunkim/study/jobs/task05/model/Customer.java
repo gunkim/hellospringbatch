@@ -1,4 +1,4 @@
-package io.github.gunkim.springbatch.jobs.task05.model;
+package io.github.gunkim.study.jobs.task05.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

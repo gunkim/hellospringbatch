@@ -1,4 +1,4 @@
-package io.github.gunkim.springbatch.jobs.task04;
+package io.github.gunkim.study.jobs.task04;
 
 import org.springframework.batch.item.file.FlatFileFooterCallback;
 

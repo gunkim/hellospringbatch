@@ -1,6 +1,6 @@
-package io.github.gunkim.springbatch.jobs.task04;
+package io.github.gunkim.study.jobs.task04;
 
-import io.github.gunkim.springbatch.jobs.task04.model.Customer;
+import io.github.gunkim.study.jobs.task04.model.Customer;
 import org.springframework.batch.item.file.transform.LineAggregator;
 
 public class CustomerLineAggregator implements LineAggregator<Customer> {

@@ -1,4 +1,4 @@
-package io.github.gunkim.springbatch.jobs.task01;
+package io.github.gunkim.study.jobs.task01;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.core.Job;
