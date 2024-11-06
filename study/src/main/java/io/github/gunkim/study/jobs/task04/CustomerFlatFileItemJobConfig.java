@@ -23,19 +23,17 @@ import java.util.concurrent.ConcurrentHashMap;
 
 @Slf4j
 @Configuration
-public class FlatFileItemJobConfig {
-    public static final int CHUNK_SIZE = 100;
-    public static final String ENCODING = "UTF-8";
-    public static final String FLAT_FILE_CHUNK_JOB = "flatFileChunkJob";
+public class CustomerFlatFileItemJobConfig {
+    private static final int CHUNK_SIZE = 100;
+    private static final String ENCODING = "UTF-8";
+    private static final String FLAT_FILE_CHUNK_JOB = "flatFileChunkJob";
     private static final String FLAT_FILE_CHUNK_STEP = "flatFileChunkStep";
 
-    private ConcurrentHashMap<String, Integer> aggregateInfos = new ConcurrentHashMap<>();
-
-
+    private final ConcurrentHashMap<String, Integer> aggregateInfos = new ConcurrentHashMap<>();
     private final ItemProcessor<Customer, Customer> itemProcessor = new AggregateCustomerProcessor(aggregateInfos);
 
     @Bean
-    public FlatFileItemReader<Customer> flatFileItemReader() {
+    public FlatFileItemReader<Customer> customerFlatFileItemReader() {
         return new FlatFileItemReaderBuilder<Customer>()
                 .name("FlatFileItemReader")
                 .resource(new ClassPathResource("./customer.csv"))
@@ -48,7 +46,7 @@ public class FlatFileItemJobConfig {
     }
 
     @Bean
-    public FlatFileItemWriter<Customer> flatFileItemWriter() {
+    public FlatFileItemWriter<Customer> customerFlatFileItemWriter() {
         return new FlatFileItemWriterBuilder<Customer>()
                 .name("flatFileItemWriter")
                 .resource(new FileSystemResource("./output/customer_new.csv"))
@@ -62,25 +60,27 @@ public class FlatFileItemJobConfig {
                 .build();
     }
 
-
     @Bean
-    public Step flatFileStep(JobRepository jobRepository, PlatformTransactionManager transactionManager) {
-        log.info("------------------ Init flatFileStep -----------------");
-
+    public Step customerFlatFileStep(JobRepository jobRepository, PlatformTransactionManager transactionManager) {
+        logInit("flatFileStep");
         return new StepBuilder(FLAT_FILE_CHUNK_STEP, jobRepository)
                 .<Customer, Customer>chunk(CHUNK_SIZE, transactionManager)
-                .reader(flatFileItemReader())
-                .writer(flatFileItemWriter())
+                .reader(customerFlatFileItemReader())
+                .writer(customerFlatFileItemWriter())
                 .processor(itemProcessor)
                 .build();
     }
 
     @Bean
-    public Job flatFileJob(Step flatFileStep, JobRepository jobRepository) {
-        log.info("------------------ Init flatFileJob -----------------");
+    public Job customerFlatFileJob(Step customerFlatFileStep, JobRepository jobRepository) {
+        logInit("flatFileJob");
         return new JobBuilder(FLAT_FILE_CHUNK_JOB, jobRepository)
                 .incrementer(new RunIdIncrementer())
-                .start(flatFileStep)
+                .start(customerFlatFileStep)
                 .build();
+    }
+
+    private void logInit(String component) {
+        log.info("------------------ Init {} -----------------", component);
     }
 }

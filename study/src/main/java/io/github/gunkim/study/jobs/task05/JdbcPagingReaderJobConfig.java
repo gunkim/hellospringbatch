@@ -59,8 +59,9 @@ public class JdbcPagingReaderJobConfig {
                 .parameterValues(Map.of("age", 20))
                 .build();
     }
+
     @Bean
-    public FlatFileItemWriter<Customer> customerFlatFileItemWriter() {
+    public FlatFileItemWriter<Customer> jdbcPagingFlatFileItemWriter() {
         return new FlatFileItemWriterBuilder<Customer>()
                 .name("customerFlatFileItemWriter")
                 .resource(new FileSystemResource("./output/customer_new_v1.csv"))
@@ -72,22 +73,22 @@ public class JdbcPagingReaderJobConfig {
 
 
     @Bean
-    public Step customerJdbcPagingStep(JobRepository jobRepository, PlatformTransactionManager transactionManager) throws Exception {
+    public Step jdbcPagingStep(JobRepository jobRepository, PlatformTransactionManager transactionManager) throws Exception {
         log.info("------------------ Init customerJdbcPagingStep -----------------");
 
         return new StepBuilder("customerJdbcPagingStep", jobRepository)
                 .<Customer, Customer>chunk(CHUNK_SIZE, transactionManager)
                 .reader(jdbcPagingItemReader())
-                .writer(customerFlatFileItemWriter())
+                .writer(jdbcPagingFlatFileItemWriter())
                 .build();
     }
 
     @Bean
-    public Job customerJdbcPagingJob(Step customerJdbcPagingStep, JobRepository jobRepository) {
+    public Job jdbcPagingJob(Step jdbcPagingStep, JobRepository jobRepository) {
         log.info("------------------ Init customerJdbcPagingJob -----------------");
         return new JobBuilder(JDBC_PAGING_CHUNK_JOB, jobRepository)
                 .incrementer(new RunIdIncrementer())
-                .start(customerJdbcPagingStep)
+                .start(jdbcPagingStep)
                 .build();
     }
 }
