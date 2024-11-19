@@ -1,6 +1,6 @@
 package io.github.gunkim.study.jobs.task05;
 
-import io.github.gunkim.study.jobs.task05.model.Customer;
+import io.github.gunkim.study.jobs.task04.model.Customer;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.core.Job;
@@ -23,8 +23,8 @@ import javax.sql.DataSource;
 @RequiredArgsConstructor
 public class JdbcBatchItemJobConfig {
     public static final int CHUNK_SIZE = 100;
-    public static final String ENCODING = "UTF-8";
     public static final String JDBC_BATCH_WRITER_CHUNK_JOB = "jdbcBatchJob";
+    public static final String ENCODING = "UTF-8";
 
     private final DataSource dataSource;
 
@@ -36,7 +36,6 @@ public class JdbcBatchItemJobConfig {
                 .itemSqlParameterSourceProvider(new CustomerItemSqlParameterSourceProvider())
                 .build();
     }
-
 
     @Bean
     public Step jdbcBatchStep(JobRepository jobRepository, PlatformTransactionManager transactionManager, FlatFileItemReader<Customer> customerFlatFileItemReader) {

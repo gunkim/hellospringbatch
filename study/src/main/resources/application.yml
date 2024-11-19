@@ -1,0 +1,14 @@
+spring:
+  profiles:
+    active: local-mysql
+    group:
+      local-h2:
+        - local-h2-datasource
+      local-mysql:
+        - local-mysql-datasource
+      dev-mysql:
+        - dev-mysql-datasource
+    include: datasource
+  batch:
+    job:
+      name: JPA_ITEM_WRITER_JOB
