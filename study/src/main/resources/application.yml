@@ -11,4 +11,4 @@ spring:
     include: datasource
   batch:
     job:
-      name: JPA_ITEM_WRITER_JOB
+      name: MYBATIS_CHUNK_JOB

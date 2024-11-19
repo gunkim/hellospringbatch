@@ -1,3 +1,4 @@
+// TODO 각 모듈별 실제로 필요한 의존성들을 받을 수 있도록 의존성 정리하기
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
@@ -43,6 +44,7 @@ subprojects {
         implementation("org.springframework.boot:spring-boot-starter-data-jpa")
         implementation("org.springframework.boot:spring-boot-starter-batch")
         implementation("org.springframework.boot:spring-boot-starter-data-jdbc")
+        implementation("org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.3")
 
         // Lombok
         compileOnly("org.projectlombok:lombok")
