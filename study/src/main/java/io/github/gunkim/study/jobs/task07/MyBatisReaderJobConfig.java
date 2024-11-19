@@ -49,7 +49,6 @@ public class MyBatisReaderJobConfig {
                 .build();
     }
 
-
     @Bean
     public Step customerJdbcCursorStep(JobRepository jobRepository, PlatformTransactionManager transactionManager) {
         log.info("------------------ Init customerJdbcCursorStep -----------------");
